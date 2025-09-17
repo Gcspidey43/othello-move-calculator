@@ -18,10 +18,10 @@ describe('Board Logic', () => {
   test('createStartingBoard returns standard starting position', () => {
     const board = createStartingBoard();
     
-    expect(board[3][3]).toBe(-1); // d4 white
-    expect(board[3][4]).toBe(1);  // e4 black
-    expect(board[4][3]).toBe(1);  // d5 black
-    expect(board[4][4]).toBe(-1); // e5 white
+    expect(board[3][3]).toBe(1);  // d4 black
+    expect(board[3][4]).toBe(-1); // e4 white
+    expect(board[4][3]).toBe(-1); // d5 white
+    expect(board[4][4]).toBe(1);  // e5 black
     
     const pieces = countPieces(board);
     expect(pieces.black).toBe(2);
@@ -39,11 +39,11 @@ describe('Board Logic', () => {
   
   test('applyMove correctly flips pieces and counts flips', () => {
     const board = createStartingBoard();
-    const move = { r: 2, c: 3 }; // d3
+    const move = { r: 2, c: 4 }; // e3
     const result = applyMove(board, move, 1); // black
     
     expect(result.flips).toBeGreaterThan(0);
-    expect(result.board[2][3]).toBe(1); // Move placed
+    expect(result.board[2][4]).toBe(1); // Move placed
     
     const newPieces = countPieces(result.board);
     expect(newPieces.black).toBeGreaterThan(2);
@@ -52,15 +52,15 @@ describe('Board Logic', () => {
   test('applyMove correctly flips pieces in a specific scenario', () => {
     // Create a specific test position
     const board = createStartingBoard();
-    // Make a move at d3 (r=2, c=3) for black
-    const move = { r: 2, c: 3 };
+    // Make a move at f4 (r=3, c=5) for black
+    const move = { r: 3, c: 5 };
     const result = applyMove(board, move, 1); // black moves
     
     // Check that the move was placed correctly
-    expect(result.board[2][3]).toBe(1);
+    expect(result.board[3][5]).toBe(1);
     
-    // Check that the flipped piece is now black (was white at d4)
-    expect(result.board[3][3]).toBe(1);
+    // Check that the flipped piece is now black (was white at e4)
+    expect(result.board[3][4]).toBe(1);
     
     // Should have flipped exactly 1 piece
     expect(result.flips).toBe(1);

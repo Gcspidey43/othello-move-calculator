@@ -11,11 +11,11 @@ import { Board, Cell, Move, PieceCount } from './types.js';
 export function createStartingBoard(): Board {
   const board: Board = Array(8).fill(null).map(() => Array(8).fill(0));
   
-  // Standard starting position: d4=white, e4=black, d5=black, e5=white
-  board[3][3] = -1; // d4 (white)
-  board[3][4] = 1;  // e4 (black) 
-  board[4][3] = 1;  // d5 (black)
-  board[4][4] = -1; // e5 (white)
+  // Standard starting position: d4=black, e4=white, d5=white, e5=black
+  board[3][3] = 1;  // d4 (black)
+  board[3][4] = -1; // e4 (white)
+  board[4][3] = -1; // d5 (white)
+  board[4][4] = 1;  // e5 (black)
   
   return board;
 }

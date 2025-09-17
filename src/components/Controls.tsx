@@ -18,6 +18,8 @@ interface ControlsProps {
   onExport: () => void;
   onImport: (data: string) => void;
   hasSuggestedMove: boolean;
+  isBoardReversed: boolean;
+  onToggleBoardReverse: () => void;
   className?: string;
 }
 
@@ -33,6 +35,8 @@ export const Controls: React.FC<ControlsProps> = ({
   onExport,
   onImport,
   hasSuggestedMove,
+  isBoardReversed,
+  onToggleBoardReverse,
   className = ''
 }) => {
   const handleImportFile = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,21 +62,22 @@ export const Controls: React.FC<ControlsProps> = ({
         <label className="block text-sm font-semibold text-gray-700">
           Side to Move:
         </label>
+        <p className="text-xs text-gray-500">Black moves first in standard Othello rules</p>
         <div className="flex space-x-2">
           <button
             className={`px-4 py-2 rounded font-medium transition-colors ${
               sideToMove === 1
-                ? 'bg-black text-white'
+                ? 'bg-gray-800 text-white'  // Dark background for black pieces
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
             onClick={() => onSideChange(1)}
           >
-            ● Black
+            ● Black (Moves First)
           </button>
           <button
             className={`px-4 py-2 rounded font-medium transition-colors border ${
               sideToMove === -1
-                ? 'bg-white text-black border-gray-400'
+                ? 'bg-gray-100 text-gray-800 border-gray-400'  // Light background for white pieces
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300 border-gray-300'
             }`}
             onClick={() => onSideChange(-1)}
@@ -155,6 +160,23 @@ export const Controls: React.FC<ControlsProps> = ({
             </div>
           </label>
         </div>
+      </div>
+      
+      {/* Reverse Board Button */}
+      <div className="space-y-2">
+        <button
+          className={`w-full px-4 py-2 rounded font-medium transition-colors ${
+            isBoardReversed 
+              ? 'bg-blue-600 text-white hover:bg-blue-700' 
+              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+          }`}
+          onClick={onToggleBoardReverse}
+        >
+          {isBoardReversed ? 'Board Reversed (Click to Normalize)' : 'Reverse Board'}
+        </button>
+        <p className="text-xs text-gray-500">
+          Use this when playing as White to match physical board orientation
+        </p>
       </div>
     </div>
   );

@@ -50,6 +50,7 @@ function App() {
   const [timeLimitMs, setTimeLimitMs] = useState(2000);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [historyIndex, setHistoryIndex] = useState(0);
+  const [isBoardReversed, setIsBoardReversed] = useState(false);
   
   const workerRef = useRef<Worker | null>(null);
   const requestIdRef = useRef<string>('');
@@ -394,6 +395,7 @@ function App() {
                   onCellClick={handleCellClick}
                   legalMoves={gameState.legalMoves}
                   suggestedMove={gameState.suggestedMove}
+                  isBoardReversed={isBoardReversed}
                 />
               </div>
               
@@ -424,6 +426,8 @@ function App() {
                 onExport={handleExport}
                 onImport={handleImport}
                 hasSuggestedMove={gameState.suggestedMove !== null}
+                isBoardReversed={isBoardReversed}
+                onToggleBoardReverse={() => setIsBoardReversed(!isBoardReversed)}
               />
             </div>
           </div>
